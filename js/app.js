@@ -1,9 +1,5 @@
 /*-------------------------------- Constants --------------------------------*/
 
-// 4) Define the required constants:
-
-	// 4.1) Define the 8 possible winning combinations as an array of arrays.
-	  // Each array will contain three indexes of the board that make a winner if they hold the same player value. 
 
 		const winningCombos = [
 			[sq0, sq1, sq2],
@@ -15,7 +11,7 @@
 			[sq0, sq4, sq8],
 			[sq2, sq4, sq6]
 		]
-		// If you are having trouble with this step, feel free to check out the winningCombos array in the solution code. 
+	
 
 
 /*---------------------------- Variables (state) ----------------------------*/
@@ -36,7 +32,7 @@
 	  // a tie has occured
 	  // or a game that is still in play.
 
-	let winner, tie, nextTurn
+	let winner, tie, nextTurn, gameStatus
 /*------------------------ Cached Element References ------------------------*/
 
 
@@ -51,10 +47,13 @@
 
 	//const gameStatus = document.querySelector()
 
-
 console.log(gameSquare)
 /*----------------------------- Event Listeners -----------------------------*/
-
+for(let i = 0; i < gameSquare.length; i++){
+	gameSquare[i].addEventListener("click", function(){
+		console.log(event.target.id)
+	})
+		}
 
 
 // 5) Next, the app should wait for the user to click a square and call a handleClick function
@@ -110,12 +109,10 @@ console.log(gameSquare)
 
 /*-------------------------------- Functions --------------------------------*/
 
-// 3.1) Call an initialize function
 
-	// 3.2) That initialize function should initialize the state variables:
 
 		function init(){
-			boardSquares = [sq0 = null, sq1 = null, sq2 = null, sq3 = null, sq4 =null, sq5 = null, sq6 = null, sq7 = null, sq8 = null]
+			boardSquares = [null, null, null, null, null, null, null, null, null]
 		
 
 			turn = {
@@ -130,14 +127,9 @@ console.log(gameSquare)
 			render()
 		}	
 		init()
+		console.log(boardSquares)
+		console.log(turn)
 		
-		
-	  // 3.2.1) Initialize the board array to 9 nulls to represent empty squares. 
-	    // The 9 elements will "map" to each square.
-	    // Index 0 represents the top-left square.
-	    // Index 1 represents the top-middle square.
-			// So on, continuing through the entire board until...
-	    // Index 8 maps to the bottom-right square.
 	  // 3.2.2) Initialize whose turn it is to 1 (player 'X'). 
 	    // Player 'O' will be represented by -1.
 	  // 3.2.3) Initialize the winner variable to null.
@@ -161,16 +153,25 @@ console.log(gameSquare)
 
 		function render() {
 			for(let i = 0; i < boardSquares.length; i++) {
-			
-				return boardSquares[i] = gameSquare
-			}
-		
+				boardSquares[i] = gameBoard
 		}
+		renderMessage()
+	}
 
 		function renderMessage() {
-			if(nextTurn === init.turn('1')) {
-				return gameStatus = "It's Player X's Turn!"
-			} else if(nextTurn === init.turn('-1')) {
-				return gameStatus = "It's Player O's Turn"
+			if(nextTurn === turn[1]) {
+				return "It's Player X's Turn!"
+			} else if(nextTurn === turn[-1]) {
+				return "It's Player O's Turn"
+			}
+		}
+
+		function renderWinningMessage(){
+			if(winnner === turn[1]){
+				return "Player X Wins!"
+			} else if(winner === turn[2]) {
+				return "Player O Wins!"
+			} else if(winner === turn){
+				return "It's a tie!"
 			}
 		}
