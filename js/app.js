@@ -4,6 +4,17 @@
 
 	// 4.1) Define the 8 possible winning combinations as an array of arrays.
 	  // Each array will contain three indexes of the board that make a winner if they hold the same player value. 
+
+		const winningCombos = [
+			[sq0, sq1, sq2],
+			[sq3, sq4, sq5],
+			[sq6, sq7, sq8],
+			[sq1, sq3, sq6],
+			[sq1, sq4, sq7],
+			[sq2, sq5, sq8],
+			[sq0, sq4, sq8],
+			[sq2, sq4, sq6]
+		]
 		// If you are having trouble with this step, feel free to check out the winningCombos array in the solution code. 
 
 
@@ -14,9 +25,11 @@
 
 	let boardSquares = []
 
+	
+
 	// 1.2) Use a turn variable to track whose turn it is.
 
-	let playerX, player0
+	let turn
 
 	// 1.3) Use a winner variable to represent three different game states:
 	  // a player that won
@@ -29,35 +42,20 @@
 
 	// 2.1) Store the 9 elements that represent the squares on the page.
 	  // You may want to give each square a class name in your HTML to make this easier!
-		const gameSquare = document.querySelector("game-square")
+		const gameSquare = document.querySelectorAll('.game-square')
 
-		const gameBoard = document.querySelector("board")
-		
-		const square1 = document.querySelector("sq0")
-		
-		const square2 = document.querySelector("sq1")
-		
-		const square3 = document.querySelector("sq2")
-		
-		const square4 = document.querySelector("sq3")
-	
-		const square5 = document.querySelector("sq4")
-	
-		const square6 = document.querySelector("sq5")
-	
-		const square7 = document.querySelector("sq6")
-	
-		const square8 = document.querySelector("sq7")
-		
-		const square9 = document.querySelector("sq8")
+		const gameBoard = document.querySelector(".board")
+
 
 	// 2.2) Store the element that displays the game status on the page.
 
-	const gameStatus = document.querySelector("message")
+	//const gameStatus = document.querySelector()
 
 
-
+console.log(gameSquare)
 /*----------------------------- Event Listeners -----------------------------*/
+
+
 
 // 5) Next, the app should wait for the user to click a square and call a handleClick function
   // the handleClick function will...
@@ -117,11 +115,23 @@
 	// 3.2) That initialize function should initialize the state variables:
 
 		function init(){
-			boardSquares = [null, null, null, null, null, null, null, null, null]
-			playerX = 1
-			playerO -1
+			boardSquares = [sq0 = null, sq1 = null, sq2 = null, sq3 = null, sq4 =null, sq5 = null, sq6 = null, sq7 = null, sq8 = null]
+		
+
+			turn = {
+				'1': {
+					name: 'playerX',
+				},
+				'-1': {
+					name: 'player0'
+				}
+			}
 			winner = null;
-		}
+			render()
+		}	
+		init()
+		
+		
 	  // 3.2.1) Initialize the board array to 9 nulls to represent empty squares. 
 	    // The 9 elements will "map" to each square.
 	    // Index 0 represents the top-left square.
@@ -148,3 +158,19 @@
 	      // Hint (again): Maybe use a ternary inside a template literal here
 
 		// 3.4) After completing this step, you should be able to manually change the values held in the board array in the initialization function and see the style of the corresponding square change on your page.
+
+		function render() {
+			for(let i = 0; i < boardSquares.length; i++) {
+			
+				return boardSquares[i] = gameSquare
+			}
+		
+		}
+
+		function renderMessage() {
+			if(nextTurn === init.turn('1')) {
+				return gameStatus = "It's Player X's Turn!"
+			} else if(nextTurn === init.turn('-1')) {
+				return gameStatus = "It's Player O's Turn"
+			}
+		}
