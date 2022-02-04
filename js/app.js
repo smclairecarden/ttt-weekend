@@ -1,5 +1,6 @@
 /*-------------------------------- Constants --------------------------------*/
-
+const playerX = 1
+const player0 = -1
 
 		const winningCombos = [
 			[sq0, sq1, sq2],
@@ -32,25 +33,28 @@
 	  // a tie has occured
 	  // or a game that is still in play.
 
-	let winner, tie, nextTurn, gameStatus
+	let winner, tie, nextTurn, gameStatus, T
 /*------------------------ Cached Element References ------------------------*/
 
 
 	// 2.1) Store the 9 elements that represent the squares on the page.
 	  // You may want to give each square a class name in your HTML to make this easier!
-		const gameSquare = document.querySelectorAll('.game-square')
+		const gameSquares = document.querySelectorAll('.game-square')
 
 		const gameBoard = document.querySelector(".board")
+
+		const message = document.querySelector("#message")
+		
 
 
 	// 2.2) Store the element that displays the game status on the page.
 
 	//const gameStatus = document.querySelector()
 
-console.log(gameSquare)
+//console.log(gameSquare)
 /*----------------------------- Event Listeners -----------------------------*/
-for(let i = 0; i < gameSquare.length; i++){
-	gameSquare[i].addEventListener("click", function(){
+for(let i = 0; i < gameSquares.length; i++){
+	gameSquares[i].addEventListener("click", function(){
 		console.log(event.target.id)
 	})
 		}
@@ -113,22 +117,13 @@ for(let i = 0; i < gameSquare.length; i++){
 
 		function init(){
 			boardSquares = [null, null, null, null, null, null, null, null, null]
-		
-
-			turn = {
-				'1': {
-					name: 'playerX',
-				},
-				'-1': {
-					name: 'player0'
-				}
-			}
+			message.textContent = "It's Player X's turn!"
 			winner = null;
 			render()
 		}	
 		init()
-		console.log(boardSquares)
-		console.log(turn)
+		//console.log(boardSquares)
+		//console.log(turn)
 		
 	  // 3.2.2) Initialize whose turn it is to 1 (player 'X'). 
 	    // Player 'O' will be represented by -1.
@@ -152,26 +147,39 @@ for(let i = 0; i < gameSquare.length; i++){
 		// 3.4) After completing this step, you should be able to manually change the values held in the board array in the initialization function and see the style of the corresponding square change on your page.
 
 		function render() {
-			for(let i = 0; i < boardSquares.length; i++) {
-				boardSquares[i] = gameBoard
-		}
+			boardSquares.forEach(function(squ, idx){
+				
+				let letter
+
+				if (squ === 1) {
+					gameSquares[idx]
+					console.log(idx)
+					letter = "X"
+				} else if(squ === -1) {
+					gameSquares[idx]
+					letter = 'O'
+				}
+				gameSquares[idx].textContent = letter
+			})
 		renderMessage()
+		renderWinningMessage()
 	}
 
+
 		function renderMessage() {
-			if(nextTurn === turn[1]) {
-				return "It's Player X's Turn!"
-			} else if(nextTurn === turn[-1]) {
-				return "It's Player O's Turn"
+			if(winner === null) {
+				return message.textContent = "It's Player O's Turn"
+			} else if(winner === null){
+				return message.textContent = "It's Player X's Turn"
 			}
 		}
 
 		function renderWinningMessage(){
-			if(winnner === turn[1]){
-				return "Player X Wins!"
-			} else if(winner === turn[2]) {
-				return "Player O Wins!"
-			} else if(winner === turn){
-				return "It's a tie!"
+			if(winner === 1){
+				return message.textContent = "Player X Wins!"
+			} else if(winner === 2) {
+				return message.textContent = "Player O Wins!"
+			} else if(winner === T){
+				return message.textContent =  "It's a tie!"
 			}
 		}
