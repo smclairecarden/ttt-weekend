@@ -28,14 +28,12 @@
 
 	// 1.2) Use a turn variable to track whose turn it is.
 
-	let turn
-
 	// 1.3) Use a winner variable to represent three different game states:
 	  // a player that won
 	  // a tie has occured
 	  // or a game that is still in play.
 
-	let T, gameStatus
+	let T, gameStatus, nextTurn
 
 	let player = {
 		'1' : 'player  X',
@@ -55,13 +53,13 @@
 
 	// 2.1) Store the 9 elements that represent the squares on the page.
 	  // You may want to give each square a class name in your HTML to make this easier!
-		const gameSquares = document.querySelectorAll('.game-square')
+		// const gameSquares = document.querySelectorAll('.game-square')
 
 		const gameBoard = document.querySelector(".board")
 
 		const message = document.querySelector("#message")
 		
-
+console.log(gameBoard.children[4])
 
 	// 2.2) Store the element that displays the game status on the page.
 
@@ -69,15 +67,19 @@
 
 //console.log(gameSquare)
 /*----------------------------- Event Listeners -----------------------------*/
-for(let i = 0; i < gameSquares.length; i++){
-	gameSquares[i].addEventListener("click", function(){
-		console.log(event.target.id)
-	})
-		}
+// for(let i = 0; i < gameSquares.length; i++){
+// 	gameSquares[i].addEventListener("click", function(){
+// 		//console.log(event.target.id)
+// 	})
+// 	}
 
-	let handleClick = function(id, idx) {
-	gameSquares[id]
-	}
+
+
+
+	gameBoard.addEventListener("click", handleClick)
+
+	console.log('click')
+
 
 // 5) Next, the app should wait for the user to click a square and call a handleClick function
   // the handleClick function will...
@@ -136,11 +138,10 @@ for(let i = 0; i < gameSquares.length; i++){
 		function init(){
 			boardSquares = [null, null, null, null, null, null, null, null, null]
 			message.textContent = `It's ${player ? 'player X' : 'player O'}'s turn!`
-			isWinner = false;
-			T = 'tie';
-			nextTurn = -1
-			gameStatus = true
-			render()
+			nextTurn = 1
+			isWinner = null;
+			//gameStatus = null
+			
 		}	
 		init()
 		//console.log(boardSquares)
@@ -172,44 +173,66 @@ for(let i = 0; i < gameSquares.length; i++){
 			boardSquares.forEach(function(squ, idx) {
 				if (squ === 1) {
 					
-					gameSquares[idx].textContent = 'X'
-					//message.textContent = "It's O's turn!"
+					gameBoard.children[idx].textContent = 'X'
+					// message.textContent = "It's O's turn!"
+					//nextTurn = -1
+					
 					
 				} else if(squ === -1) {
-					gameSquares[idx].textContent = 'O'
-					//message.textContent = "it's X's turn!"
+					gameBoard.children[idx].textContent = 'O'
+					// message.textContent = "it's X's turn!"
+					//nextTurn = 1
 				} 
-				if(isWinner === null || gameStatus === true) {
-				renderMessage()
-				} else {
-				renderWinnerMessage()
-				}
+			
 			})
+			// switchTurn()
+			//handleClick()
+			// renderWinngingMessage()
 			}
 			
+			
+		
 	
 
 
-		// function renderMessage() {
-		// 	if(winner === null) {
-		// 		return message.textContent = "It's Player O's Turn"
-		// 	} else if(winner === null){
-		// 		return message.textContent = "It's Player X's Turn"
-		// 	}
-		// }
-
-		function renderMessage(){
-			
-				if(isWinner === null || gameStatus === true) {
-					return message.textContent = `It's ${player ? 'player X' : 'player O'}'s turn!`
-				}  
+		function switchTurn() {
+			nextTurn *= -1
 		}
 
-
-		function renderWinnerMessage () {
-			if (isWinner === true || gameStatus === false) {
-				return message.textContent =  `Congrats to the winner, ${player ? 'player X' : 'player O' } !`
-				} else if(!isWinner) {
-				return message.textContent = "It's a tie!"	
-				}
+		function renderTurn() {
+				if(nextTurn === -1) {
+				return message.textContent = "It's Player O's Turn"
+			} else if(nextTurn === 1){
+				return message.textContent = "It's Player X's Turn"
+			}
 		}
+		
+
+		function renderTieMessage(){
+			if(isWinner === T) {
+			return message.textContent = `It's a tie!`
+			}
+		}
+
+		function renderWinningMessage() {
+			if(isWinner === true) {
+			return message.textContent =  `Congrats to the winner, ${player ? player[1] :  player[-1] } !`
+			} else {
+			return renderTieMessage()
+			}
+		}
+	
+		function handleClick(evt) {
+			const index = evt.target.id.replace('sq', '')
+			if(boardSquares[index] === null) {
+
+				boardSquares[index] = nextTurn
+				console.log(boardSquares)
+				//console.log(evt.target.id.replace('sq', ''))
+				render()
+				switchTurn()
+				renderTurn()
+				renderWinningMessage()
+				renderTieMessage()
+			} 
+			}
