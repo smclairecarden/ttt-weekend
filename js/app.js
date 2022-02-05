@@ -1,6 +1,9 @@
 /*-------------------------------- Constants --------------------------------*/
-const playerX = 1
-const player0 = -1
+// const playerX = 1
+// const playerO = -1
+
+
+
 
 		const winningCombos = [
 			[sq0, sq1, sq2],
@@ -12,7 +15,6 @@ const player0 = -1
 			[sq0, sq4, sq8],
 			[sq2, sq4, sq6]
 		]
-	
 
 
 /*---------------------------- Variables (state) ----------------------------*/
@@ -33,7 +35,21 @@ const player0 = -1
 	  // a tie has occured
 	  // or a game that is still in play.
 
-	let winner, tie, nextTurn, gameStatus, T
+	let T, gameStatus
+
+	let player = {
+		'1' : 'player  X',
+		'-1': 'player O'
+	}
+	
+	
+
+
+	
+
+	console.log(player)
+
+	//let players = {1: 'playerX', -1: 'playerO'}
 /*------------------------ Cached Element References ------------------------*/
 
 
@@ -59,14 +75,16 @@ for(let i = 0; i < gameSquares.length; i++){
 	})
 		}
 
+	let handleClick = function(id, idx) {
+	gameSquares[id]
+	}
 
 // 5) Next, the app should wait for the user to click a square and call a handleClick function
   // the handleClick function will...
 
 	// 5.1) Obtain the index of the square that was clicked by:
 	  // 5.1.1) "Extracting" the index from an id assigned to the element in the HTML 
-		// Hint: Each id seems to correspond with an index in our board array. How could these be used if
-		// we cleaned them up a bit?
+		// Hint: Each id seems to correspond with an index in our board array. How could these be used if  we cleaned them up a bit?
 
 	// 5.2) If the board has a value at the index, immediately return because that square is already taken.
 
@@ -117,8 +135,11 @@ for(let i = 0; i < gameSquares.length; i++){
 
 		function init(){
 			boardSquares = [null, null, null, null, null, null, null, null, null]
-			message.textContent = "It's Player X's turn!"
-			winner = null;
+			message.textContent = `It's ${player ? 'player X' : 'player O'}'s turn!`
+			isWinner = false;
+			T = 'tie';
+			nextTurn = -1
+			gameStatus = true
 			render()
 		}	
 		init()
@@ -147,39 +168,48 @@ for(let i = 0; i < gameSquares.length; i++){
 		// 3.4) After completing this step, you should be able to manually change the values held in the board array in the initialization function and see the style of the corresponding square change on your page.
 
 		function render() {
-			boardSquares.forEach(function(squ, idx){
-				
-				let letter
-
+			
+			boardSquares.forEach(function(squ, idx) {
 				if (squ === 1) {
-					gameSquares[idx]
-					console.log(idx)
-					letter = "X"
+					
+					gameSquares[idx].textContent = 'X'
+					//message.textContent = "It's O's turn!"
+					
 				} else if(squ === -1) {
-					gameSquares[idx]
-					letter = 'O'
+					gameSquares[idx].textContent = 'O'
+					//message.textContent = "it's X's turn!"
+				} 
+				if(isWinner === null || gameStatus === true) {
+				renderMessage()
+				} else {
+				renderWinnerMessage()
 				}
-				gameSquares[idx].textContent = letter
 			})
-		renderMessage()
-		renderWinningMessage()
-	}
-
-
-		function renderMessage() {
-			if(winner === null) {
-				return message.textContent = "It's Player O's Turn"
-			} else if(winner === null){
-				return message.textContent = "It's Player X's Turn"
 			}
+			
+	
+
+
+		// function renderMessage() {
+		// 	if(winner === null) {
+		// 		return message.textContent = "It's Player O's Turn"
+		// 	} else if(winner === null){
+		// 		return message.textContent = "It's Player X's Turn"
+		// 	}
+		// }
+
+		function renderMessage(){
+			
+				if(isWinner === null || gameStatus === true) {
+					return message.textContent = `It's ${player ? 'player X' : 'player O'}'s turn!`
+				}  
 		}
 
-		function renderWinningMessage(){
-			if(winner === 1){
-				return message.textContent = "Player X Wins!"
-			} else if(winner === 2) {
-				return message.textContent = "Player O Wins!"
-			} else if(winner === T){
-				return message.textContent =  "It's a tie!"
-			}
+
+		function renderWinnerMessage () {
+			if (isWinner === true || gameStatus === false) {
+				return message.textContent =  `Congrats to the winner, ${player ? 'player X' : 'player O' } !`
+				} else if(!isWinner) {
+				return message.textContent = "It's a tie!"	
+				}
 		}
