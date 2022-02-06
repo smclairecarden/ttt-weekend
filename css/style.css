@@ -29,5 +29,10 @@ div {
 button {
   margin: 10px;
   background-color: lightseagreen;
+  color: lightpink;
+}
+
+div.game-square {
+color: plum;
 }
 

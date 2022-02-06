@@ -49,7 +49,7 @@
 			renderWinningMessage()
 			boardSquares.forEach(function(squ, idx) {
 				if (squ === 1) {
-					gameBoard.children[idx].textContent = 'X'										
+					gameBoard.children[idx].textContent = 'X'									
 				} else if(squ === -1) {
 					gameBoard.children[idx].textContent = 'O'					
 				} else if(squ === null) {
@@ -61,7 +61,6 @@
 
 		function switchTurn() {
 				nextTurn *= -1
-				console.log('player Turn', nextTurn)
 				renderTurn()
 		}
 
@@ -78,7 +77,6 @@
 				const index = (evt.target.id.replace('sq', ''))
 				if(boardSquares[index] === null) {
 				boardSquares[index] = nextTurn
-				console.log(boardSquares)
 				render()
 				} 
 			}
@@ -93,8 +91,6 @@
 				return winner = T
 				}
 				})
-				
-				console.log('winner', winner)
 			}
 
 			// function renderWinningMessage() {
