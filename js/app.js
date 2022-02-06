@@ -13,22 +13,22 @@
 
 	let boardSquares = []
 
-	let T, gameStatus, nextTurn
+	let T, nextTurn
 
-	let  playerX = 1
+	let playerX = 1
 	let playerO = -1
 /*------------------------ Cached Element References ------------------------*/
 
-		const gameBoard = document.querySelector(".board")
+	const gameBoard = document.querySelector(".board")
 
-		const message = document.querySelector("#message")
-
-		const replayBtn = document.querySelector("#button")
+	const message = document.querySelector("#message")
+	
+	const replayBtn = document.querySelector("#button")
 		
 
-		gameBoard.addEventListener("click", handleClick)
+	gameBoard.addEventListener("click", handleClick)
 
-		replayBtn.addEventListener("click", init)
+	replayBtn.addEventListener("click", init)
 	
 
 /*-------------------------------- Functions --------------------------------*/
@@ -42,7 +42,6 @@
 		}	
 		init()
 		
-
 		function render() {	
 			switchTurn()
 			getWinner()
@@ -57,11 +56,11 @@
 				}	
 			})		
 			
-			}
+		}
 
 		function switchTurn() {
-				nextTurn *= -1
-				renderTurn()
+			nextTurn *= -1
+			renderTurn()
 		}
 
 		function renderTurn() {
@@ -73,45 +72,34 @@
 				
 		}
 
-			function handleClick(evt) {
+		function handleClick(evt) {
 				const index = (evt.target.id.replace('sq', ''))
 				if(boardSquares[index] === null) {
 				boardSquares[index] = nextTurn
 				render()
 				} 
-			}
+		}
 
-			function getWinner() {
+		function getWinner() {
 			
-				winningCombos.forEach(combo => {
-					let winCombo  = Math.abs(boardSquares[combo[0]] + boardSquares[combo[1]] +boardSquares[combo[2]])
-				if (winCombo === 3) {
-				return winner = nextTurn
-				} else if(!boardSquares.includes(null)) {
-				return winner = T
-				}
-				})
+			winningCombos.forEach(combo => {
+			let winCombo  = Math.abs(boardSquares[combo[0]] + boardSquares[combo[1]] +boardSquares[combo[2]])
+			if (winCombo === 3) {
+			return winner = nextTurn
+			} else if(!boardSquares.includes(null)) {
+			return winner = T
 			}
+			})
+		}
 
-			// function renderWinningMessage() {
-			// 	if(isWinner === -1) {
-			// 	return message.textContent =  `Congrats to the winner, player X!`
-			// 	} else if(isWinner === 1) {
-			// 	return message.textContent =  `Congrats to the winner, player O!`
-			// 	} else if(isWinner === T) {
-			// 	return message.textContent = `It's a tie!`
-			// 	}
-			// }
-
-
-			function renderWinningMessage() {
-				if(winner === -1) {
-				return message.textContent =  `Congrats to the winner, Player X!`
-				} else if(winner === 1) {
-				return message.textContent =  `Congrats to the winner, Player O!`
-				} else if(winner === T){
-				return message.textContent = `It's a tie!`
-				}
+		function renderWinningMessage() {
+			if(winner === -1) {
+			return message.textContent =  `Congrats to the winner, Player X!`
+			} else if(winner === 1) {
+			return message.textContent =  `Congrats to the winner, Player O!`
+			} else if(winner === T){
+			return message.textContent = `It's a tie!`
 			}
+		}
 
 			
