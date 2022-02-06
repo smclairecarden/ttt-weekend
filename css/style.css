@@ -26,3 +26,8 @@ div {
   vertical-align: middle;
 }
 
+button {
+  margin: 10px;
+  background-color: lightseagreen;
+}
+
